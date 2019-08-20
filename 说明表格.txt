@@ -3,3 +3,82 @@
 1. view.js 中使用div绘制表格UI
 
 2.grid.js 负责表格数据
+
+3.数据格式为数组对象；
+  
+  表格格式：
+  
+  var columnsInfo =[
+       {
+          id: "fundName",
+          name: "Fund Name",
+          align:'left',
+          width:250
+        },
+        {
+            id: "ter_value",
+            name: "Value",
+            type: "text",
+            renderer: "textInfoFormatter",
+            align:'left',
+            sortable: false,
+            width:85,
+            readOnly:true,
+            headerNameClass:"headerNameClass",
+            className: "htCenter",
+            
+        },
+        {
+           id: "ter_value",
+            name: "Value",
+            type: "text",
+            renderer: "textInfoFormatter",
+            align:'left',
+            sortable: false,
+            width:85,
+            readOnly:true,
+            headerNameClass:"headerNameClass",
+            className: "htCenter",
+        }
+  ]
+
+
+  var option={
+    rows: data,
+    columns: columnsInfo,
+    width:1230,
+    height: 610,
+    showRowNumber: true
+  }
+
+
+   grid.setOption(option);
+   grid.setData(data);
+
+
+4.数据格式枚举
+
+var align=['left','center','right'];
+var type=['number','text','dropdown','checkbox','date','none'];
+
+
+5. renderer参数
+
+    myRenderer: function(
+          prop,
+          value,
+          rowData,
+          rowIndex,
+          columnIndex,
+          cellNode
+        ) {
+            return value;
+        }
+
+
+
+6. edit type 参数
+
+
+
+
