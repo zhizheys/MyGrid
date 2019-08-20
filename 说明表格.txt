@@ -1,0 +1,5 @@
+
+
+1. view.js 中使用div绘制表格UI
+
+2.grid.js 负责表格数据
