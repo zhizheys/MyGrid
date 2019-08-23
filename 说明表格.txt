@@ -138,6 +138,9 @@ var type=['number','text','dropdown','checkbox','date','none'];
   //change data
   grid.setData(data);
 
+  grid.showLoading();
+  grid.hideLoading();
+
 
 
 
