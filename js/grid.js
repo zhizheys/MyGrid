@@ -1,220 +1,15 @@
 
 (
-
-
     function(window,document,$){
-
-        
-        function game2048(opt){
-            var prefix = opt.prefix
-            var len =opt.len
-            var size = opt.size
-            var margin= opt.margin;
-
-            
-            
-
-            var view = new View(prefix,len,size,margin);
-            view.init();
-
-            var board = new Board(len);
-            board.init();
-
-            board.onGenerate=function(e){
-                //console.log(e)
-                view.addNum(e.x,e.y,e.num)
-            }
-
-            board.generate();
-            board.generate();
-
-            board.onMove=function(e){
-
-                view.move(e.from,e.to);
-
-                if(e.to.num > e.from.num){
-                    this.score = this.score + e.to.num;
-                    view.updateScore(this.score);
-
-                    if(this.score >= this.winScore){
-                        this.isGameOver=true;
-                        view.winGame();
-                    }
-                }
-
-            }
-
-            board.onMoveComplete = function(e){
-
-                if(!board.canMove()){
-                    this.isGameOver =true;
-                    setTimeout(function(){
-                        alert('本次得分: ' + this.score);
-                    },300);
-                }
-
-                if(e.moved){
-                    setTimeout(function(){
-                        board.generate();
-
-                    },200)
-                }
-            }
-
-            $(document).keydown(
-                function(e){
-
-                    if(board.isGameOver){
-                        return false;
-                    }
-
-                    switch(e.which){
-                        case 37:
-                            board.moveLeft();
-                            break;
-
-                        case 38:
-                            board.moveUp();
-                            break;
-
-                        case 39:
-                            board.moveRight();
-                            break;
-
-                        case 40:
-                            console.log('to down');
-                            board.moveDown();
-                            break;
-
-                        default:
-                            break;
-                    }
-
-                   
-                }
-            )
-
-            function start(){
-                score=0;
-                view.updateScore(0);
-                view.cleanNum();
-                board.init();
-                board.generate();
-                board.generate();
-            }
-
-            $('#' + prefix + '_restart').click(start);
-
-        }
-
-        window['game2048'] = game2048;
-
-
-        function View(prefix,len,size,margin){
-            this.prefix = prefix;
-            this.len = len;
-            this.margin = margin;
-            this.size = size;
-            //this.container = $('#' + prefix + '_container');
-            this.container = $("#game_container");
-            var containerSize = len * size + margin * (len+1);
-            this.container.css({width:containerSize,height:containerSize})
-            this.nums ={};
-        }
-
-        View.prototype ={
-            getPos:function(n){
-                return this.margin + n *(this.size + this.margin);
-            },
-            init:function(){
-                for(var x=0,len=this.len;x<this.len;++x){
-                    for(var y=0;y<len;++y){
-                        var $cell = $('<div class="' + this.prefix + '-cell"></div>');
-
-                        $cell.css({
-                            width:this.size + 'px',
-                            height:this.size + 'px',
-                            top:this.getPos(x),
-                            left:this.getPos(y)
-                        });
-                        
-                        console.log("append")
-                        $cell.appendTo(this.container);
-                        
-                    }
-                }
-            },
-            addNum:function(x,y,num){
-                var $num = $('<div class="' + this.prefix + '-num ' + this.prefix + '-num-' + num + '">');
-
-                $num.text(num).css(
-                    {
-                        top:this.getPos(x) + parseInt(this.size / 2),
-                        left:this.getPos(y) + parseInt(this.size /2)
-                    }
-                ).appendTo(this.container).animate(
-                    {
-                        width:this.size + 'px',
-                        height:this.size + 'px',
-                        lineHeight:this.size + 'px',
-                        top:this.getPos(x),
-                        left:this.getPos(y)
-                    },100);
-
-                this.nums[x + '-' + y ]=$num;
-            },
-            move:function(from,to){
-                var fromIndex = from.x + '-' + from.y;
-                var toIndex = to.x + '-' + to.y;
-                var clean = this.nums[toIndex];
-
-                this.nums[toIndex] = this.nums[fromIndex];
-                delete this.nums[fromIndex];
-
-                var prefix= this.prefix + '-num-';
-                var pos = {top:this.getPos(to.x),
-                    left:this.getPos(to.y)}
-
-                this.nums[toIndex].finish().animate(pos,200,function(){
-                    if(to.num > from.num){
-                        clean.remove();
-                        $(this).text(to.num).removeClass(prefix + from.num).addClass(prefix + to.num);
-                    }
-                })
-
-            },
-            updateScore:function(score){
-                var $score = $('#' + this.prefix + '_score');
-                $score.text(score);
-            },
-            winGame:function(){
-                alert('win game');
-            },
-            win:function(){
-                $('#' + this.prefix + '_over_info').html('<p>你胜利了</p>');
-                $('#' + this.prefix + '_over').removeClass(this.prefix + '-hide');
-            },
-            over:function(){
-                $('#' + this.prefix + '_over_info').html('<p>本次得分</p><p>' + this.score + '</p>');
-                $('#' + this.prefix + '_over').removeClass(this.prefix + '-hide');
-            },
-            cleanNum:function(){
-                this.nums={};
-                $('#' + this.prefix + '_over').addClass(this.prefix  +'-hide')
-                $('.'  + this.prefix + '-num').remove();
-            }
-        }
-
-        function Board(len){
+        function Grid(len){
             this.len =len;
             this.arr =[];
             this.score=0;
             this.winScore=50;
             this.isGameOver=false;
-
         }
 
-        Board.prototype ={
+        Grid.prototype ={
             init:function(){
 
                 for(var arr=[],len = this.len,x=0;x<len;++x){
@@ -408,9 +203,7 @@
 
         }
 
-        
-
+        window['Grid'] = Grid;
     }
-
 
 )(window,document,jQuery)
