@@ -1,0 +1,88 @@
+<html>
+	<head>
+		<style>
+			
+			.tg{
+				border-top:1px solid rgb(212, 212, 212);
+				border-left:1px solid rgb(212, 212, 212);
+				border-right:1px solid rgb(212, 212, 212);
+			}
+
+			.tg-row{
+				display:block;
+				clear:both;
+				height:24px;
+				width:auto;
+				min-width:1px;
+				overflow:hidden;
+				margin:0;
+				padding:0;
+				outline:none;
+				border-bottom:1px rgb(212, 212, 212) solid;
+			}
+
+			.tg-cell{
+				display:block;
+				clear:none;
+				float:left;
+				width:96px;
+				height:100%;
+				line-height:24px;
+				text-align:right;
+				overflow:hidden;
+				margin:0;
+				padding:0 2px;
+				outline:none;
+				font-size:14px;
+				border-right:1px rgb(212, 212, 212) solid;
+				min-width: 50px;
+			}
+			
+		
+		</style>
+	
+	</head>
+	<body>
+	
+		<h2>the table</h2>
+		<div id="mytable"></div>
+		
+		
+		<script>
+			
+			(function(){
+
+				var tableContainer= document.getElementById('mytable');
+
+				var tableObj = document.createElement("div");
+				tableObj.classList.add('tg');
+				tableObj.style.width="800px";
+
+				//3 row, 5 column
+				for(var j=0;j<3;j++){
+
+					var row = document.createElement("div");
+					row.classList.add('tg-row');
+
+					for(var k=0;k<5;k++){
+						var cell = document.createElement("div");
+						cell.classList.add('tg-cell');
+						cell.innerHTML='aaa';
+						row.appendChild(cell);
+					}
+
+					tableObj.appendChild(row);
+				}
+
+
+				tableContainer.appendChild(tableObj);
+
+
+				
+			
+			})();
+			
+		</script>
+	</body>
+
+</html>

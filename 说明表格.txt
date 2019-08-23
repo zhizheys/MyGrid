@@ -44,7 +44,7 @@
 
 
   var option={
-    rows: data,
+    data: dataList,
     columns: columnsInfo,
     width:1230,
     height: 610,
@@ -52,8 +52,10 @@
   }
 
 
-   grid.setOption(option);
-   grid.setData(data);
+  var grid = new MyGrid(containerObj, option);
+
+  //change data
+  grid.setData(dataList);
 
 
 4.数据格式枚举
@@ -78,6 +80,66 @@ var type=['number','text','dropdown','checkbox','date','none'];
 
 
 6. edit type 参数
+
+
+
+7.使用方式
+
+  var columnsInfo =[
+       {
+          id: "fundName",
+          name: "Fund Name",
+          align:'left',
+          width:250
+        },
+        {
+            id: "ter_value",
+            name: "Value",
+            type: "text",
+            renderer: "textInfoFormatter",
+            align:'left',
+            sortable: false,
+            width:85,
+            readOnly:true,
+            headerNameClass:"headerNameClass",
+            className: "htCenter",
+            
+        },
+        {
+           id: "ter_value",
+            name: "Value",
+            type: "text",
+            renderer: "textInfoFormatter",
+            align:'left',
+            sortable: false,
+            width:85,
+            readOnly:true,
+            headerNameClass:"headerNameClass",
+            className: "htCenter",
+        }
+  ]
+
+
+  var option={
+    data: dataList,
+    columns: columnsInfo,
+    width:1230,
+    height: 610,
+    showRowNumber: true
+  }
+
+  //by id
+  var containerObj = document.getElementById('myTable');
+
+  //vue object
+   var containerObj == self.$refs.fundListDiv;
+
+  var grid = new MyGrid(containerObj, option);
+  //change data
+  grid.setData(data);
+
+
+
 
 
 
