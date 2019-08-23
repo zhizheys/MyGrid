@@ -29,8 +29,8 @@
             view.init();
 
 
-            //var board = new Grid(len);
-            //board.init();
+            var board = new Grid(data,columns);
+            board.init();
 
         }
 

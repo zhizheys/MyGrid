@@ -23,7 +23,6 @@
                 
                 this.createHeader();
                 this.createBody();
-
                 this.container.appendChild(gridObj);
             },
             createHeader:function(){
@@ -64,7 +63,11 @@
             },
             createFooter:function(){
 
+            },
+            sort:function(){
+                
             }
+
         }
 
         window['View'] = View;

@@ -4,12 +4,14 @@ $(function(){
 		{
 			"id":1,
 			"userName":"zhan san",
-			"userAge":18
+			"userAge":18,
+			"userAddress":"北京"
 		},
 		{
 			"id":2,
 			"userName":"li si",
-			"userAge":30
+			"userAge":30,
+			"userAddress":"深圳"
 		}
 	]
 
@@ -36,6 +38,18 @@ $(function(){
 		 {
 			id: "userAge",
 			 name: "User Age",
+			 type: "text",
+			 renderer: "textInfoFormatter",
+			 align:'left',
+			 sortable: false,
+			 width:85,
+			 readOnly:true,
+			 headerNameClass:"headerNameClass",
+			 className: "htCenter",
+		 },
+		 {
+			id: "userAddress",
+			 name: "地址",
 			 type: "text",
 			 renderer: "textInfoFormatter",
 			 align:'left',
