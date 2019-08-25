@@ -2,7 +2,7 @@
 (
     function(window,document,$){
 
-        function crateGrid(container,opt){
+        function createGrid(container,opt){
    
             var data = opt.data;
             var columns =opt.columns;
@@ -34,7 +34,7 @@
 
         }
 
-        window['crateGrid'] = crateGrid;
+        window['createGrid'] = createGrid;
 
     }
 
