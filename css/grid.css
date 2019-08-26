@@ -65,3 +65,11 @@
     border-right:1px rgb(212, 212, 212) solid;
     min-width: 50px;
 }
+
+.tg-cell-header:hover{
+    cursor: pointer;
+}
+
+.select-header{
+    background-color: #ababab;
+}

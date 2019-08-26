@@ -9,6 +9,7 @@
             var width = opt.width;
             var height= opt.height;
             var showRowNumber = opt.showRowNumber==null?false:opt.showRowNumber;
+            var isAscSort =true;
 
             if(container == null){
                 alert("container is null");
@@ -31,6 +32,36 @@
 
             var board = new Grid(data,columns);
             board.init();
+
+            board.onSortComplete=function(){
+                view.sort();
+            }
+
+            $(".tg-cell-header").click(function(e){
+                $(e.target).addClass('select-header').siblings().removeClass('select-header');
+
+                var headerText = $(e.target).text();
+                var headerId=null;
+                if(headerText !=null && headerText.length >0){
+                    //get column id by text
+                    for(var j in columns){
+                        var item = columns[j];
+
+                        if(item.name === headerText){
+                            headerId = item.id;
+                            break;
+                        }
+                    }
+
+                    //sort by headerId
+                    this.isAscSort=!this.isAscSort;
+                    board.sort(headerId,this.isAscSort);
+
+
+                }else{
+                    alert("can not find header");
+                }
+            })
 
         }
 

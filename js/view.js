@@ -27,6 +27,13 @@
             },
             createHeader:function(){
                 var columnInfo = this.columns;
+
+                 //remove old node
+                var code = document.getElementsByClassName("tg-row-header");
+                for(var i = code.length - 1; i >= 0; i--){ 
+                     code[i].parentNode.removeChild(code[i]); 
+                }
+
                 var header = document.createElement('div');
                 header.classList.add('tg-row-header');
 
@@ -44,6 +51,13 @@
                 var dataList = this.data;
                 var columnInfo = this.columns;
 
+                //remove old node
+                var code = document.getElementsByClassName("tg-row");
+                for(var i = code.length - 1; i >= 0; i--){ 
+                    code[i].parentNode.removeChild(code[i]); 
+                }
+
+                //create new node
                 for(var k=0;k<dataList.length;k++){
                     var row = document.createElement('div');
                     row.classList.add('tg-row');
@@ -65,7 +79,8 @@
 
             },
             sort:function(){
-                
+                this.createBody();
+                this.container.appendChild(this.grid);
             }
 
         }
