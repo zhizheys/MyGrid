@@ -52,22 +52,8 @@
             },
             sort:function(sortById,isAscSort){
                 var dataArray = this.data;
-                // var a = new Array();
-                // var c= {'name':'a','age':10}
-                // var d= {'name':'c','age':47}
-                // var e= {'name':'b','age':50}
-                
-                // a.push(c);
-                // a.push(d);
-                // a.push(e);
-        
-                // sortDataArray(a, 'age', false, String);
-                
                 var dataType='String';
-
                 this.sortDataArray(dataArray, sortById, isAscSort, dataType);
-                console.log('after sort')
-                console.log(dataArray)
                 this.onSortComplete();
 
             },

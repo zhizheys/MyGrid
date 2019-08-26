@@ -38,8 +38,7 @@
             }
 
             $(".tg-cell-header").click(function(e){
-                $(e.target).addClass('select-header').siblings().removeClass('select-header');
-
+                
                 var headerText = $(e.target).text();
                 var headerId=null;
                 if(headerText !=null && headerText.length >0){
@@ -55,12 +54,27 @@
 
                     //sort by headerId
                     this.isAscSort=!this.isAscSort;
+                    $(e.target).addClass('select-header').siblings().removeClass('select-header');
+
+                    if(this.isAscSort){
+                        $(e.target).addClass('toAsc').removeClass('toDesc');
+                        $(e.target).siblings().removeClass('toAsc').removeClass('toDesc');
+                    }else{
+                        $(e.target).addClass('toDesc').removeClass('toAsc');
+                        $(e.target).siblings().removeClass('toAsc').removeClass('toDesc');
+                    }
+
                     board.sort(headerId,this.isAscSort);
 
 
                 }else{
                     alert("can not find header");
                 }
+            })
+
+            $(".tg-cell").click(function(e){
+                $(".tg-cell").removeClass('select-cell');
+                $(e.target).addClass('select-cell');
             })
 
         }
