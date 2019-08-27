@@ -128,18 +128,82 @@
                     $(e.target).addClass('select-cell');
 
                     //get current column info
-                    // var columnId = self.getAttribute('columnid');
-                    // var currentColumnInfo = self.getColumnInfoById(columnId);
+                    var columnId = this.getAttribute('columnid');
+                    var currentColumnInfo = self.getColumnInfoById(columnId);
 
-                    // var isReadOnly= currentColumnInfo.readOnly==null?false:currentColumnInfo.readOnly;
-                    // var renderer=currentColumnInfo.renderer==null?null:currentColumnInfo.renderer;
-                    // var dataType=currentColumnInfo.type ==null?'text':currentColumnInfo.type;
+                    var isReadOnly= currentColumnInfo.readOnly==null?false:currentColumnInfo.readOnly;
+                    var renderer=currentColumnInfo.renderer==null?null:currentColumnInfo.renderer;
+                    var dataType=currentColumnInfo.type ==null?'text':currentColumnInfo.type;
 
                     //priority:  readOnly > renderer > type
+                    if(isReadOnly){
+                        return false;
+                    }
 
-                    // if(isReadOnly){
-                    //     return false;
-                    // }
+                    if(renderer !=null){
+                        return 'render value'
+                    }
+
+                    //var type=['number','text','dropdown','checkbox','date','currency'];
+
+                    switch(dataType){
+                        case 'text':
+                                try{
+                                    var width="100px";
+                                    var height = "25px";
+
+                                    var inputElement = document.createElement("input");
+                                    inputElement.type = "text";
+                                    inputElement.value =e.target.innerText === null ? null : e.target.innerText.trim();
+                                    inputElement.classList.add('tg-cell');
+                                    // inputElement.setAttribute(
+                                    //   "style",
+                                    //   "border:1px; border-style:solid; border-color:#0099CC;width:" + width + ";height:" + height
+                                    // );
+                          
+                                    inputElement.onblur = function() {
+                                      e.target.innerText = inputElement.value;
+                                      inputElement.setAttribute(
+                                        "style",
+                                        "border:1px; border-style:solid; border-color:#0099CC;width:98%;padding:0 0;margin:0 0;"
+                                      );
+                                      inputElement.parentNode.replaceChild(e.target, inputElement);
+
+                                    //   self.changeDataPointValue(
+                                    //     self.currentVirtualId,
+                                    //     self.currentDataPointId,
+                                    //     inputElement.value
+                                    //   );
+                          
+                                    };
+                          
+                                    e.target.parentNode.replaceChild(inputElement, e.target);
+                                    inputElement.focus();
+                                    inputElement.select();
+
+                                }catch(ex){
+                                    alert(ex)
+                                }
+
+                            break;
+                        case 'number':
+
+                            break;
+                        case 'dropdown':
+
+                            break;
+                        case 'checkbox':
+
+                            break;
+                        case 'date':
+
+                            break;
+                        case 'currency':
+
+                        break;
+                            default:
+
+                    }
 
 
                 })

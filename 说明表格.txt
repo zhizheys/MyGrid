@@ -61,7 +61,7 @@
 4.数据格式枚举
 
 var align=['left','center','right'];
-var type=['number','text','dropdown','checkbox','date','none'];
+var type=['number','text','dropdown','checkbox','date','currency'];
 
 
 5. renderer参数
