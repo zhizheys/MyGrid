@@ -1,7 +1,11 @@
-.marign-top-50{
+.margin-top-50{
     margin-top: 50px;
 }
 
 .margin-left-50{
     margin-left: 50px;
+}
+
+.clear-both{
+    clear: both;
 }

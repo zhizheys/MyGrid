@@ -39,9 +39,7 @@
                 view.sort();
             }
 
-        
-            
-
+            return view;
         }
 
         window['createGrid'] = createGrid;

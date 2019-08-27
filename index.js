@@ -24,6 +24,9 @@ $(function(){
 		}
 	]
 
+	$("#initialData").empty();
+	$("#initialData").text(JSON.stringify(dataList));
+
 	var columnsInfo =[
 		{
 		   id: "id",
@@ -48,6 +51,7 @@ $(function(){
 			 id: "userAge",
 			 name: "年龄",
 			 type: "date",
+			 dataFormat:'yyyy-MM-dd',
 			 align:'left',
 			 sortable: false,
 			 width:85,
@@ -68,15 +72,20 @@ $(function(){
 		 },
 		 {
 			id: "userAddress",
-			 name: "地址",
-			 type: "text",
-			 renderer: "textInfoFormatter",
-			 align:'left',
-			 sortable: false,
-			 width:85,
-			 readOnly:true,
-			 headerNameClass:"headerNameClass",
-			 className: "htCenter",
+			name: "地址",
+			type: "dropdown",
+            dropdownSource:[
+                {label:'北京',id:1},
+                {label:'上海',id:2},
+				{label:'深圳',id:3},
+				{label:'广州',id:4}
+            ],
+			align:'left',
+			sortable: false,
+			width:85,
+			readOnly:false,
+			headerNameClass:"headerNameClass",
+			className: "htCenter",
 		 }
    ]
  
@@ -97,6 +106,13 @@ $(function(){
    //grid.hideLoading();
    //grid.setData();
 
-	createGrid(containerObj, option);
+	var grid =createGrid(containerObj, option);
+
+	$("#btnCurrentData").click(function(){
+		var currentData = grid.getGridData();
+		$("#currentData").empty();
+		$("#currentData").text(JSON.stringify(currentData));
+
+	})
 
 })

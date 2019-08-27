@@ -62,6 +62,9 @@
             },
             onSortComplete:function(){
 
+            },
+            changeCellValue:function(rowIndex,columnId,newValue){
+                //this.data[rowIndex][columnId]=newValue; 
             }
             
         }

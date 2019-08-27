@@ -116,6 +116,33 @@ var type=['number','text','dropdown','checkbox','date','currency'];
             readOnly:true,
             headerNameClass:"headerNameClass",
             className: "htCenter",
+        },
+        {
+           id: "ter_value",
+            name: "Value",
+            type: "dropdown",
+            dropdownSource:[
+               {id:1,label:'abc'},
+               {id:1,label:'abc'}
+            ],
+            align:'left',
+            sortable: false,
+            width:85,
+            readOnly:true,
+            headerNameClass:"headerNameClass",
+            className: "htCenter",
+        },
+        {
+           id: "ter_value",
+            name: "Value",
+            type: "date",
+            dateForamt:'yyyy-MM-dd',
+            align:'left',
+            sortable: false,
+            width:85,
+            readOnly:true,
+            headerNameClass:"headerNameClass",
+            className: "htCenter",
         }
   ]
 

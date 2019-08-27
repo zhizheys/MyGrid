@@ -111,6 +111,7 @@
                         var cell = document.createElement("div");
                         cell.classList.add('tg-cell');
                         cell.setAttribute('columnid',columnInfoItemId);
+                        cell.setAttribute('rowindex',k);
 
                         cell.innerText=dataList[k][columnInfoItemId]
                         row.appendChild(cell);
@@ -127,6 +128,9 @@
                     $(".tg-cell").removeClass('select-cell');
                     $(e.target).addClass('select-cell');
 
+                    //get row index
+                    var rowIndex = parseInt(this.getAttribute('rowindex'));
+
                     //get current column info
                     var columnId = this.getAttribute('columnid');
                     var currentColumnInfo = self.getColumnInfoById(columnId);
@@ -134,6 +138,8 @@
                     var isReadOnly= currentColumnInfo.readOnly==null?false:currentColumnInfo.readOnly;
                     var renderer=currentColumnInfo.renderer==null?null:currentColumnInfo.renderer;
                     var dataType=currentColumnInfo.type ==null?'text':currentColumnInfo.type;
+                    var dropdownSource =currentColumnInfo.dropdownSource ==null?[]:currentColumnInfo.dropdownSource;
+                    var dataFormat =currentColumnInfo.dataFormat ==null?null:currentColumnInfo.dataFormat;
 
                     //priority:  readOnly > renderer > type
                     if(isReadOnly){
@@ -156,24 +162,23 @@
                                     inputElement.type = "text";
                                     inputElement.value =e.target.innerText === null ? null : e.target.innerText.trim();
                                     inputElement.classList.add('tg-cell');
+                                    inputElement.style.width="100px";
+
                                     // inputElement.setAttribute(
                                     //   "style",
                                     //   "border:1px; border-style:solid; border-color:#0099CC;width:" + width + ";height:" + height
                                     // );
                           
                                     inputElement.onblur = function() {
-                                      e.target.innerText = inputElement.value;
-                                      inputElement.setAttribute(
-                                        "style",
-                                        "border:1px; border-style:solid; border-color:#0099CC;width:98%;padding:0 0;margin:0 0;"
-                                      );
-                                      inputElement.parentNode.replaceChild(e.target, inputElement);
 
-                                    //   self.changeDataPointValue(
-                                    //     self.currentVirtualId,
-                                    //     self.currentDataPointId,
-                                    //     inputElement.value
-                                    //   );
+                                        self.changeCellValue(rowIndex,columnId,inputElement.value);
+                                        e.target.innerText = inputElement.value;
+                                        inputElement.setAttribute(
+                                            "style",
+                                            "border:1px; border-style:solid; border-color:#0099CC;width:98%;padding:0 0;margin:0 0;"
+                                        );
+                                        inputElement.parentNode.replaceChild(e.target, inputElement);
+                                   
                           
                                     };
                           
@@ -189,7 +194,49 @@
                         case 'number':
 
                             break;
+
                         case 'dropdown':
+                            try{
+
+                                var inputElement = document.createElement("select");
+                                inputElement.classList.add('tg-cell');
+                                inputElement.style.width="100px";
+                                
+                                for(var j=0;j<dropdownSource.length;j++){
+                                    myOption = document.createElement("option"); 
+                                    myOption.value = dropdownSource[j].id; 
+                                    myOption.text = dropdownSource[j].label; 
+                                    inputElement.appendChild(myOption); 
+                                }
+
+                                inputElement.onblur = function() {
+                                    var label = '';
+
+                                    for(var j=0;j<dropdownSource.length;j++){
+                                    
+                                        if(dropdownSource[j].id.toString() ===inputElement.value){
+                                            label =dropdownSource[j].label;
+                                            break;
+                                        }
+                                       
+                                    }
+
+                                    self.changeCellValue(rowIndex,columnId,inputElement.value);
+
+                                    //change innerText and value in dataArray
+
+                                    e.target.innerText = label;
+                                    inputElement.parentNode.replaceChild(e.target, inputElement);
+                               
+                                };
+                      
+                                e.target.parentNode.replaceChild(inputElement, e.target);
+                                inputElement.focus();
+                                //inputElement.select();
+
+                            }catch(ex){
+                                alert(ex)
+                            }
 
                             break;
                         case 'checkbox':
@@ -207,6 +254,10 @@
 
 
                 })
+
+                $(".tg-cell").onblur = function(e) {
+                    $(e.target).removeClass('select-cell');
+                };
                 
             },
             createFooter:function(){
@@ -230,6 +281,13 @@
                 }
 
                 return columnObj;
+            },
+            changeCellValue:function(rowIndex,columnId,newValue){
+                var self=this;
+                self.data[rowIndex][columnId]=newValue; 
+            },
+            getGridData:function(){
+                return this.data;
             }
 
         }
