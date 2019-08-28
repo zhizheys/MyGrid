@@ -55,7 +55,7 @@ $(function(){
 			 align:'left',
 			 sortable: false,
 			 width:85,
-			 readOnly:true,
+			 readOnly:false,
 			 headerNameClass:"headerNameClass",
 			 className: "htCenter",
 		 },
@@ -66,7 +66,7 @@ $(function(){
 			 align:'left',
 			 sortable: false,
 			 width:85,
-			 readOnly:true,
+			 readOnly:false,
 			 headerNameClass:"headerNameClass",
 			 className: "htCenter",
 		 },
@@ -117,6 +117,6 @@ $(function(){
 
 	var containerCalendar = document.getElementById('calendar_container');
 
-	createCalendar(containerCalendar, '2019-08-24');
+	//createCalendar(containerCalendar, '2019-08-24');
 
 })

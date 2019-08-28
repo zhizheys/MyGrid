@@ -3,8 +3,11 @@
     width: 294px; 
     border: 1px solid #000000; 
     margin: 20px auto; 
+    background-color: #F3F3F3;
+    z-index: 100000;
+    position:absolute;
    } 
-   
+
    .calendar-div-header{
       height: 26px;
       width:100%;

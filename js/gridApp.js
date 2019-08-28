@@ -51,6 +51,8 @@
            
             var calendar = new Calendar(container,date);
             calendar.init();
+
+            return calendar;
         }
 
         window['createGrid'] = createGrid;

@@ -242,6 +242,19 @@
 
                             break;
                         case 'date':
+                            var inputElement = document.createElement("div");
+                            inputElement.classList.add("show-calendar");
+
+                            var dateValue=e.target.innerText === null ? new Date() : e.target.innerText.trim();
+
+                            createCalendar(inputElement, dateValue);
+                            
+                            inputElement.onblur = function() {
+                                inputElement.parentNode.replaceChild(e.target, inputElement);
+                            };
+                  
+                            e.target.parentNode.replaceChild(inputElement, e.target);
+                            inputElement.focus();
 
                             break;
                         case 'currency':

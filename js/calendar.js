@@ -17,7 +17,7 @@
 
                 var calendarObj = document.createElement("div");
                 self.calendar= calendarObj;
-                calendarObj.style.zIndex='100'
+                calendarObj.style.zIndex=100000;
 				calendarObj.classList.add('calender-board');
                 self.container.appendChild(self.calendar);
 
@@ -139,7 +139,6 @@
                 self.calendar.appendChild(bodyDiv);
                
             }
-            
         }
 
         window['Calendar'] = Calendar;
