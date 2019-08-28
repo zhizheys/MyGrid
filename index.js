@@ -115,4 +115,8 @@ $(function(){
 
 	})
 
+	var containerCalendar = document.getElementById('calendar_container');
+
+	createCalendar(containerCalendar, '2019-08-24');
+
 })

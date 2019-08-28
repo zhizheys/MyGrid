@@ -1,66 +1,71 @@
 
-   #data{
-    width: 280px; 
+   .calender-board{
+    width: 294px; 
     border: 1px solid #000000; 
     margin: 20px auto; 
    } 
+   
+   .calendar-div-header{
+      height: 26px;
+      width:100%;
+   }
 
-   #data > p{ 
-    display: flex; 
-   } 
+   .month-btn{
+      border:1px solid #3250B2;
+      background-color: #7985AB;
+      cursor: pointer;
+      padding:2px 10px;
+   }
 
-   #data > h5{ 
-    text-align: center; 
-   } 
+   .float-right{
+      float:right;
+   }
 
-   #data > p > span{ 
-    padding: 0 10px; 
-   } 
 
-   #prev,#next{ 
-    cursor: pointer; 
-   } 
+   .month-info{
+      text-align: center;
+      font-weight: bolder;
+      color: cadetblue;
+      height: 26px;
+      width:100%;
 
-   #nian{ 
-    flex: 1; 
-    text-align: center; 
-   } 
+   }
 
-   #title{ 
-    overflow: hidden; 
-    list-style: none; 
-    background: #ccc; 
-   } 
+   .week-info{
+      background-color: #BCC6E5;
+      height: 26px;
+      width:100%;
+   }
 
-   #title > li{ 
-    float: left; 
-    width: 40px; 
-    height: 26px; 
-    line-height: 26px; 
-    text-align: center; 
-   } 
+   .week-info>ul > li{ 
+      float: left; 
+      width: 40px; 
+      height: 26px; 
+      line-height: 26px; 
+      text-align: center; 
+      border:1px solid #D4D4D4;
+     } 
 
-   #date{ 
-    overflow: hidden; 
-    list-style: none; 
-   } 
+     .day-info>ul > li{ 
+      float: left; 
+      width: 40px; 
+      height: 26px; 
+      line-height: 26px; 
+      text-align: center; 
+      border:1px solid #D4D4D4;
+     } 
 
-   #date > li{ 
-    float: left; 
-    width: 34px; 
-    height: 34px; 
-    margin: 1px 1px; 
-    border: 2px solid rgba(0,0,0,0); 
-    line-height: 34px; 
-    text-align: center; 
-    cursor: pointer; 
-   } 
+   .day{
+        cursor: pointer;
+   }
 
-   #date > .hover:hover{ 
-    border: 2px solid red; 
-   } 
+   .day:hover{
+      background-color:#6E85B2;
+   }
+   
+   .active-day{
+      border:1px solid red;
+      color:red;
+   }
 
-     
-   .active{ 
-    color: red; 
-   } 
+   

@@ -42,8 +42,19 @@
             return view;
         }
 
-        window['createGrid'] = createGrid;
 
+        function createCalendar(container,date){
+            if(container == null){
+                alert("calendar container is null");
+                return false;
+            }
+           
+            var calendar = new Calendar(container,date);
+            calendar.init();
+        }
+
+        window['createGrid'] = createGrid;
+        window['createCalendar'] = createCalendar;
     }
 
 )(window,document,jQuery)

@@ -4,7 +4,6 @@
 
         function View(container,data,columns,width,height,showRowNumber){
             var self=this;
-            
             self.container =container;
             self.data = data;
             self.columns =columns;
