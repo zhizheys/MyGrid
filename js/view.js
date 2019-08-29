@@ -244,18 +244,20 @@
                         case 'date':
                             var inputElement = document.createElement("div");
                             inputElement.classList.add("show-calendar");
-
                             var dateValue=e.target.innerText === null ? new Date() : e.target.innerText.trim();
-
-                            createCalendar(inputElement, dateValue);
+                            var cal = createCalendar(inputElement, dateValue);
                             
-                            inputElement.onblur = function() {
-                                inputElement.parentNode.replaceChild(e.target, inputElement);
+                            inputElement.onmouseleave = function() {
+                                self.changeCellValue(rowIndex,columnId,cal.getCurrentDate());
+                                e.target.innerText=cal.getCurrentDate();
+                                $(inputElement).remove();
+                                
                             };
-                  
-                            e.target.parentNode.replaceChild(inputElement, e.target);
-                            inputElement.focus();
 
+                            e.target.parentNode.appendChild(inputElement);
+                            inputElement.focus();
+                          
+                           
                             break;
                         case 'currency':
 

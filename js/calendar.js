@@ -8,6 +8,7 @@
             self.dateString=dateString;
             self.date = new Date();
             self.calendar=null;
+            self.yyyy_MM='';
         }
 
         Calendar.prototype ={
@@ -19,10 +20,22 @@
                 self.calendar= calendarObj;
                 calendarObj.style.zIndex=100000;
 				calendarObj.classList.add('calender-board');
-                self.container.appendChild(self.calendar);
+                
 
                 self.createHeader();
                 self.createBody();
+
+                self.container.appendChild(self.calendar);
+
+                // calendarObj.onmouseout = function() {
+                //     $('.calender-board').empty();
+                //     $('.calender-board').remove();
+                // };
+
+                calendarObj.onblur = function() {
+                    $('.calender-board').empty();
+                    $('.calender-board').remove();
+                };
             },
             parserDate:function (dateString) {
                 var t = Date.parse(dateString);  
@@ -50,8 +63,12 @@
                 var nextSpan = document.createElement('span');
                 nextSpan.innerText='下个月'
                 nextSpan.classList.add('month-btn');
-                nextSpan.classList.add('float-right');
                 headerDiv.appendChild(nextSpan);
+
+                var closeSpan = document.createElement('span');
+                closeSpan.innerText='关闭'
+                closeSpan.classList.add('month-btn');
+                headerDiv.appendChild(closeSpan);
 
 
                 //headerDiv.appendChild(header);
@@ -64,6 +81,10 @@
                 $(nextSpan).click(function(e){
                     alert('next month')
                 })
+
+                $(closeSpan).click(function(e){
+                    $(self.container).hide();
+                })
             },
             createBody:function(){
                 var self=this;
@@ -74,6 +95,7 @@
                 var nian = self.date.getFullYear();//当前年份 
                 var yue = self.date.getMonth(); //当前月 
                 var tian = self.date.getDate(); //当前天 
+                self.yyyy_MM = nianD + '-' + (yueD + 1);
 
                  //remove old node
                 $(self.calendar).children("calendar-div-body").remove();
@@ -124,20 +146,35 @@
                 for(var i=1;i<=setTian;i++){//利用获取到的当月最后一天 把 前边的 天数 都循环 出来 
                     var li=document.createElement('li'); 
                     li.innerText = i; 
+                    li.classList.add('day');
 
-                    if(nian == nianD && yue == yueD && i == tianD){ 
-                        li.className = "active-day"; 
-                    }else{ 
-                        li.className = "day"; 
+                    if(nian == nianD && yue == yueD && i == tianD){
+                        li.classList.add("active-day"); 
                     }
                     
                     dayUL.appendChild(li); 
                 }
 
+            
                 dayDiv.appendChild(dayUL);
                 bodyDiv.appendChild(dayDiv);
                 self.calendar.appendChild(bodyDiv);
+
+                //必须使用静态的父亲节点，才能动态添加事件
+                $(self.container).on('click','.day',function(e){
+                
+                    var selectDay = $(e.target).text();
+                    self.dateString= self.yyyy_MM + '-' + selectDay;
+
+                    $(".day").removeClass('active-day');
+                    $(e.target).addClass('active-day');
+                })
+
                
+            },
+            getCurrentDate:function(){
+                var self = this;
+                return self.dateString;
             }
         }
 
