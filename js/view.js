@@ -12,6 +12,7 @@
             self.showRowNumber = showRowNumber;
             self.grid=null;
             self.isAscSort =true;
+            self.mouseDown = false;
         }
 
         View.prototype ={
@@ -248,16 +249,15 @@
                             var cal = createCalendar(inputElement, dateValue);
                             
                             inputElement.onmouseleave = function() {
-                                self.changeCellValue(rowIndex,columnId,cal.getCurrentDate());
-                                e.target.innerText=cal.getCurrentDate();
+                                var currentDate =cal.getCurrentDate();
+                                self.changeCellValue(rowIndex,columnId,currentDate);
+                                e.target.innerText=currentDate;
                                 $(inputElement).remove();
-                                
                             };
 
                             e.target.parentNode.appendChild(inputElement);
                             inputElement.focus();
                           
-                           
                             break;
                         case 'currency':
 
@@ -269,10 +269,47 @@
 
                 })
 
-                $(".tg-cell").onblur = function(e) {
+                $(".tg-cell").blur(function(e) {
                     $(e.target).removeClass('select-cell');
-                };
+                });
+
                 
+                //drag
+                let startRowIndex =0;
+                let startColumnIndex=0;
+                let endRowIndex =0;
+                let endColumnIndex=0;
+
+                $(".tg-cell").mousedown(function (event) {
+                    self.mouseDown = true
+                    startRowIndex = parseInt(this.getAttribute('rowindex'));
+                    startColumnIndex = self.getColumnIndexById(this.getAttribute('columnid'));
+                    
+                    $(".tg-cell").removeClass('cell-selecting');
+                    $(".tg-cell").removeClass('cell-selected');
+                    
+                    $(event.target).addClass('cell-selecting');
+                });
+                
+                $(".tg-cell").mousemove(function (event) {
+					
+                    
+					if (self.mouseDown != null && self.mouseDown == true) {
+						$(event.target).addClass('cell-selecting');
+					}
+                });
+                
+
+                $(".tg-cell").mouseup(function () {
+                    self.mouseDown = false;
+                    endRowIndex = parseInt(this.getAttribute('rowindex'));
+                    endColumnIndex = self.getColumnIndexById(this.getAttribute('columnid'));
+                    
+
+                    console.log("starRowIndex:" + startRowIndex + ', startColumnIndex:' + startColumnIndex);
+                    console.log("endRowIndex:" + endRowIndex + ', endColumnIndex:' + endColumnIndex);
+				});
+
             },
             createFooter:function(){
 
@@ -291,10 +328,23 @@
                 for(var j=0;j<self.columns.length;j++){
                     if(self.columns[j].id === columnId){
                         columnObj= self.columns[j];
+                        break;
                     }
                 }
 
                 return columnObj;
+            },
+            getColumnIndexById:function(columnId){
+                var self=this;
+                var columnIndex= 0;
+                for(var j=0;j<self.columns.length;j++){
+                    if(self.columns[j].id === columnId){
+                        columnIndex=j
+                        break;
+                    }
+                }
+
+                return columnIndex;
             },
             changeCellValue:function(rowIndex,columnId,newValue){
                 var self=this;

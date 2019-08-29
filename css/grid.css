@@ -92,3 +92,7 @@
     border:0px solid red;
     height:200px;
 }
+
+.cell-selecting { background:#cccccc;}
+
+.cell-selected { background:  #ababab;}
