@@ -299,8 +299,16 @@
                 
                 $(".tg-cell").mousemove(function (event) {
 					
-                    
 					if (self.mouseDown != null && self.mouseDown == true) {
+                        endRowIndex = parseInt(this.getAttribute('rowindex'));
+                        endColumnIndex = self.getColumnIndexById(this.getAttribute('columnid'));
+                    
+                        //change all the cell css
+                        if(endRowIndex >= startRowIndex){
+                            
+                            
+                        }
+
 						$(event.target).addClass('cell-selecting');
 					}
                 });
