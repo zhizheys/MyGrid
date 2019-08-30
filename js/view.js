@@ -13,6 +13,12 @@
             self.grid=null;
             self.isAscSort =true;
             self.mouseDown = false;
+
+            self.startRowIndex =0;
+            self.startColumnIndex=0;
+            self.endRowIndex =0;
+            self.endColumnIndex=0;
+
         }
 
         View.prototype ={
@@ -306,9 +312,70 @@
                     endColumnIndex = self.getColumnIndexById(this.getAttribute('columnid'));
                     
 
-                    console.log("starRowIndex:" + startRowIndex + ', startColumnIndex:' + startColumnIndex);
-                    console.log("endRowIndex:" + endRowIndex + ', endColumnIndex:' + endColumnIndex);
-				});
+                    if(endRowIndex < startRowIndex){
+                        var tempRowIndex= startRowIndex;
+                        startRowIndex = endRowIndex;
+                        endRowIndex= tempRowIndex;
+                        
+                        var tempColumnIndex= startColumnIndex;
+                        startColumnIndex = endColumnIndex;
+                        endColumnIndex= tempColumnIndex;
+                        
+                    }
+
+                    self.startRowIndex=startRowIndex;
+                    self.startColumnIndex=startColumnIndex;
+                    self.endRowIndex=endRowIndex;
+                    self.endColumnIndex=endColumnIndex;
+                });
+                
+
+                $(".tg-cell").bind({
+                    copy : function(e){
+                        var copyArray =[];
+
+                        for(var j=self.startRowIndex;j<=self.endRowIndex;j++){
+                            var copyRowArray =[];
+
+                            for(var k=self.startColumnIndex;k<=self.endColumnIndex;k++){
+
+                                var id = self.getColumnIdByIndex(k);
+                                copyRowArray.push(self.data[j][id]);
+                            }
+  
+                            copyArray.push(copyRowArray);
+                        }
+
+                        console.log(copyArray.toString());
+
+                        var clipBoardContent=copyArray.toString();
+
+                        //或者使用https://github.com/zenorocha/clipboard.js
+
+                        var copy = function (e) {
+                            e.preventDefault();
+                            console.log('copy');
+                            var text = "blabla"
+                            if (e.clipboardData) {
+                                e.clipboardData.setData('text/plain', text);
+                            } else if (window.clipboardData) {
+                                window.clipboardData.setData('Text', text);
+                            }
+                        }
+                        window.addEventListener('copy', copy);
+                        document.execCommand('copy');
+                        window.removeEventListener('copy', copy);
+                    },
+                    paste : function(event){
+                        alert("past")
+
+                        var clipboardData = (event.clipboardData || window.clipboardData);
+                        return clipboardData.getData("text");
+                    },
+                    cut: function(event){
+                        alert("cut")
+                    }
+                });
 
             },
             createFooter:function(){
@@ -345,6 +412,18 @@
                 }
 
                 return columnIndex;
+            },
+            getColumnIdByIndex:function(columnIndex){
+                var self=this;
+                var columnId= null;
+                for(var j=0;j<self.columns.length;j++){
+                    if(j === columnIndex){
+                        columnId=self.columns[j].id 
+                        break;
+                    }
+                }
+
+                return columnId;
             },
             changeCellValue:function(rowIndex,columnId,newValue){
                 var self=this;
