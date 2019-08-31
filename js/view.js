@@ -302,14 +302,56 @@
 					if (self.mouseDown != null && self.mouseDown == true) {
                         endRowIndex = parseInt(this.getAttribute('rowindex'));
                         endColumnIndex = self.getColumnIndexById(this.getAttribute('columnid'));
-                    
-                        //change all the cell css
-                        if(endRowIndex >= startRowIndex){
-                            
-                            
-                        }
 
-						$(event.target).addClass('cell-selecting');
+                        //check is move to another cell
+                        if(startRowIndex != endRowIndex || startColumnIndex != endColumnIndex){
+                            //change all the cell css
+                            if(endRowIndex >= startRowIndex){
+                                
+                                var tableBody= $('.tg-div-body').children();
+                                for(var j=0;j<self.data.length;j++){
+                                    var tempRowHtmlObjChild= tableBody.eq(j).children();
+
+
+                                    for(var k=0;k<self.columns.length;k++){
+
+                                        if(j>= startRowIndex && j<= endRowIndex && k>= startColumnIndex && k<= endColumnIndex){
+                                            tempRowHtmlObjChild.eq(k).addClass('cell-selecting')
+                                        }else{
+                                             tempRowHtmlObjChild.eq(k).removeClass('cell-selecting')
+                                        }
+
+                                    }
+
+                                }
+
+
+
+                            }else{
+                                
+                                var tableBody= $('.tg-div-body').children();
+                                for(var j=0;j<self.data.length;j++){
+                                    var tempRowHtmlObjChild= tableBody.eq(j).children();
+
+
+                                    for(var k=0;k<self.columns.length;k++){
+
+                                        if(j>= endRowIndex && j<= startRowIndex && k>= endColumnIndex && k<= startColumnIndex){
+                                            tempRowHtmlObjChild.eq(k).addClass('cell-selecting')
+                                        }else{
+                                             tempRowHtmlObjChild.eq(k).removeClass('cell-selecting')
+                                        }
+
+                                    }
+
+                                }
+
+
+                            }
+
+
+                        }
+                    
 					}
                 });
                 
@@ -436,6 +478,9 @@
             changeCellValue:function(rowIndex,columnId,newValue){
                 var self=this;
                 self.data[rowIndex][columnId]=newValue; 
+            },
+            getCellHtmlObjectByRowColumn:function(rowIndex,columnIndex){
+
             },
             getGridData:function(){
                 return this.data;
