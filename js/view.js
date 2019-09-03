@@ -402,19 +402,10 @@
 
                         //或者使用https://github.com/zenorocha/clipboard.js
 
-                        var copy = function (e) {
-                            e.preventDefault();
-                            console.log('copy');
-                            var text = "blabla"
-                            if (e.clipboardData) {
-                                e.clipboardData.setData('text/plain', text);
-                            } else if (window.clipboardData) {
-                                window.clipboardData.setData('Text', text);
-                            }
-                        }
-                        window.addEventListener('copy', copy);
-                        document.execCommand('copy');
-                        window.removeEventListener('copy', copy);
+                        $('#copy-id').val(clipBoardContent)
+                        $('#copy-id').select();
+                        document.execCommand("copy",false,null);
+
                     },
                     paste : function(event){
                         alert("past")
