@@ -25,6 +25,11 @@
                 return false;
             }
 
+            //取消页面、表格 拖动鼠标时自动选择不相干的内容
+            container.onselectstart = container.ondrag = function(){
+                return false;
+            }
+
             var view = new View(container,data,columns,width,height,showRowNumber);
             view.init();
             view.onHeaderClick=function(headerId,isAscSort){

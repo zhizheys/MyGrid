@@ -379,44 +379,88 @@
                     self.endColumnIndex=endColumnIndex;
                 });
                 
+                $(bodyDiv).attr("tabindex","0");
+                $(bodyDiv).on("focus",function(){
+                    $(this).on("keydown",function(event){
+                        if(event.ctrlKey){
 
-                $(".tg-cell").bind({
-                    copy : function(e){
-                        var copyArray =[];
+                            //copy
+                            if(event.keyCode == 67){
+                                console.log("你使用了Ctrl+C组合件功能！");
+                                event.keyCode = 0;
 
-                        for(var j=self.startRowIndex;j<=self.endRowIndex;j++){
-                            var copyRowArray =[];
+                                var copyArray =[];
 
-                            for(var k=self.startColumnIndex;k<=self.endColumnIndex;k++){
+                                for(var j=self.startRowIndex;j<=self.endRowIndex;j++){
+                                    var copyRowArray =[];
 
-                                var id = self.getColumnIdByIndex(k);
-                                copyRowArray.push(self.data[j][id]);
+                                    for(var k=self.startColumnIndex;k<=self.endColumnIndex;k++){
+
+                                        var id = self.getColumnIdByIndex(k);
+                                        copyRowArray.push(self.data[j][id]);
+                                    }
+        
+                                    copyArray.push(copyRowArray);
+                                }
+
+                                console.log(copyArray.toString());
+
+                                var clipBoardContent=copyArray.toString();
+
+                                //或者使用https://github.com/zenorocha/clipboard.js
+
+                                $('#copy-id').val(clipBoardContent)
+                                $('#copy-id').select();
+                                document.execCommand("copy",false,null);
                             }
-  
-                            copyArray.push(copyRowArray);
+                            
+                            //paste
+                            if(event.keyCode == 86){
+                                console.log("ctrl + v")
+                                event.keyCode = 0;
+                            }
                         }
+                    })
+                })
 
-                        console.log(copyArray.toString());
 
-                        var clipBoardContent=copyArray.toString();
+                // $(".tg-cell").bind({
+                //     copy : function(e){
+                //         var copyArray =[];
 
-                        //或者使用https://github.com/zenorocha/clipboard.js
+                //         for(var j=self.startRowIndex;j<=self.endRowIndex;j++){
+                //             var copyRowArray =[];
 
-                        $('#copy-id').val(clipBoardContent)
-                        $('#copy-id').select();
-                        document.execCommand("copy",false,null);
+                //             for(var k=self.startColumnIndex;k<=self.endColumnIndex;k++){
 
-                    },
-                    paste : function(event){
-                        alert("past")
+                //                 var id = self.getColumnIdByIndex(k);
+                //                 copyRowArray.push(self.data[j][id]);
+                //             }
+  
+                //             copyArray.push(copyRowArray);
+                //         }
 
-                        var clipboardData = (event.clipboardData || window.clipboardData);
-                        return clipboardData.getData("text");
-                    },
-                    cut: function(event){
-                        alert("cut")
-                    }
-                });
+                //         console.log(copyArray.toString());
+
+                //         var clipBoardContent=copyArray.toString();
+
+                //         //或者使用https://github.com/zenorocha/clipboard.js
+
+                //         $('#copy-id').val(clipBoardContent)
+                //         $('#copy-id').select();
+                //         document.execCommand("copy",false,null);
+
+                //     },
+                //     paste : function(event){
+                //         alert("past")
+
+                //         var clipboardData = (event.clipboardData || window.clipboardData);
+                //         return clipboardData.getData("text");
+                //     },
+                //     cut: function(event){
+                //         alert("cut")
+                //     }
+                // });
 
             },
             createFooter:function(){

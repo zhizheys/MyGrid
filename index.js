@@ -100,6 +100,7 @@ $(function(){
  
    //by id
    var containerObj = document.getElementById('mygrid_container');
+
  
    //var grid = new MyGrid(containerObj, option);
    //grid.showLoading();
