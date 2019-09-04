@@ -31,6 +31,7 @@
                 //gridObj.style.height= self.height + "px";
                 self.container.appendChild(self.grid);
                 
+                self.createCopyPlugin();
                 self.createHeader();
                 self.createBody();
                 
@@ -389,28 +390,34 @@
                                 console.log("你使用了Ctrl+C组合件功能！");
                                 event.keyCode = 0;
 
-                                var copyArray =[];
+                                var copyString='';
 
                                 for(var j=self.startRowIndex;j<=self.endRowIndex;j++){
-                                    var copyRowArray =[];
+                                    var rowStr='';
 
                                     for(var k=self.startColumnIndex;k<=self.endColumnIndex;k++){
 
                                         var id = self.getColumnIdByIndex(k);
-                                        copyRowArray.push(self.data[j][id]);
+                                        rowStr = rowStr + '\t' + self.data[j][id];
                                     }
-        
-                                    copyArray.push(copyRowArray);
+
+                                    var index=rowStr.indexOf('\t');
+                                    rowStr = rowStr.substring(index + 1);
+
+                                    if(rowStr.trim() !=null && rowStr.trim().length >0){
+                                        copyString = copyString + rowStr + '\r\n'
+                                    }
+
                                 }
 
-                                console.log(copyArray.toString());
+                                console.log(copyString);
 
-                                var clipBoardContent=copyArray.toString();
+                                var clipBoardContent=copyString;
 
                                 //或者使用https://github.com/zenorocha/clipboard.js
 
-                                $('#copy-id').val(clipBoardContent)
-                                $('#copy-id').select();
+                                $('.tg-copy-textarea').val(clipBoardContent);
+                                $('.tg-copy-textarea').first().select();
                                 document.execCommand("copy",false,null);
                             }
                             
@@ -418,53 +425,29 @@
                             if(event.keyCode == 86){
                                 console.log("ctrl + v")
                                 event.keyCode = 0;
+                                console.log("start" + $('.tg-copy-textarea').val());
+                                $('.tg-copy-textarea').first().focus();
+                                document.execCommand("Paste");
+
+                               
+                                console.log("paste" + $('.tg-copy-textarea').val());
                             }
                         }
                     })
                 })
 
-
-                // $(".tg-cell").bind({
-                //     copy : function(e){
-                //         var copyArray =[];
-
-                //         for(var j=self.startRowIndex;j<=self.endRowIndex;j++){
-                //             var copyRowArray =[];
-
-                //             for(var k=self.startColumnIndex;k<=self.endColumnIndex;k++){
-
-                //                 var id = self.getColumnIdByIndex(k);
-                //                 copyRowArray.push(self.data[j][id]);
-                //             }
-  
-                //             copyArray.push(copyRowArray);
-                //         }
-
-                //         console.log(copyArray.toString());
-
-                //         var clipBoardContent=copyArray.toString();
-
-                //         //或者使用https://github.com/zenorocha/clipboard.js
-
-                //         $('#copy-id').val(clipBoardContent)
-                //         $('#copy-id').select();
-                //         document.execCommand("copy",false,null);
-
-                //     },
-                //     paste : function(event){
-                //         alert("past")
-
-                //         var clipboardData = (event.clipboardData || window.clipboardData);
-                //         return clipboardData.getData("text");
-                //     },
-                //     cut: function(event){
-                //         alert("cut")
-                //     }
-                // });
-
             },
             createFooter:function(){
 
+            },
+            createCopyPlugin:function(){
+                var self=this;
+              
+                 //remove old node
+                $(self.grid).children(".tg-copy-textarea").remove();
+                var textareaDiv = document.createElement('textarea');
+                textareaDiv.classList.add('tg-copy-textarea');
+                self.grid.appendChild(textareaDiv);
             },
             onHeaderClick:function(headerId,isAscSort){
 

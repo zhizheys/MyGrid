@@ -96,3 +96,9 @@
 .cell-selecting { background:#cccccc;}
 
 .cell-selected { background:  #ababab;}
+
+.tg-copy-textarea{
+    position: absolute;
+    top:-999999px;
+    z-index: -1;
+}
